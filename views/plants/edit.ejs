@@ -1,0 +1,25 @@
+<!-- edit.ejs/plants -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit <%=plant.name%></title>
+</head>
+<body>
+  <h1>Edit <%= plant.name %></h1>
+  
+  <form action="/plants/<%=plant._id%>?_method=PUT" method="POST">
+    <label for="name">Plant Name:</label>
+    <input type="text" name="name" id="name" value="<%= plant.name %>" />
+
+    <label for="description">Description: </label>
+    <textarea name="description" id="description"><%= plant.description %></textarea>
+    
+
+
+    <button type="submit">Update Plant</button>
+  </form>
+  <a href="/plants">Back to plants</a>
+</body>
+</html>
