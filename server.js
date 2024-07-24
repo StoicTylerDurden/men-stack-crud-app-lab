@@ -11,6 +11,10 @@ require('./config/database.js');
 const Plant = require('./models/plant.js')
 
 
+// Import plants.js/controllers
+
+const plantsCtrl = require('./controllers/plants.js')
+
 const app = express()
 
 // Middlewares
@@ -27,53 +31,30 @@ app.get('/', async(req, res)=>{
 })
 
 // GET	/plants/Index	Displays a list of all plants
-app.get('/plants', async(req, res)=>{
-    const foundPlants = await Plant.find()
-    res.render('plants/index.ejs', {plants: foundPlants})
-})
+app.get('/plants', plantsCtrl.Index)
 
 
 // GET	/plants/new	New	Shows a form to create a new plant
-app.get('/plants/new', async(req, res)=>{
-    res.render('plants/new.ejs', {Plant})
-})
+app.get('/plants/new', plantsCtrl.New)
 
 // POST	/plants	Create	Creates a new plant
-app.post('/plants', async(req, res)=>{
-    await Plant.create(req.body)
-    res.redirect('plants/new')
-})
+app.post('/plants', plantsCtrl.Create)
 
 
 // GET	/plants/:id	Show	Displays a specific plant by its ID
-app.get('/plants/:plantId', async(req, res)=>{
-    const foundPlant = await Plant.findById(req.params.plantId)
-    res.render('plants/show.ejs', {plant: foundPlant})
-})
+app.get('/plants/:plantId', plantsCtrl.Show)
 
 // GET	/plants/:id/edit	Edit	Shows a form to edit an existing plant
-app.get('/plants/:plantId/edit', async(req, res)=>{
-    const foundPlant = await Plant.findById(req.params.plantId)
-    res.render('plants/edit.ejs', {plant: foundPlant})
-})
-
+app.get('/plants/:plantId/edit', plantsCtrl.Edit)
 
 // PUT	/plants/:id	Update	Updates a specific plant by its ID
-app.put('/plants/:plantId/', async (req, res) => {
-    
-    // Update the plant in the database
-    await Plant.findByIdAndUpdate(req.params.plantId, req.body);
-  
-    // Redirect to the fruit's show page to see the updates
-    res.redirect(`/plants/${req.params.plantId}`);
-  })
+app.put('/plants/:plantId/', plantsCtrl.Update)
 
 
 // DELETE	/plants/:id	Destroy	Deletes a specific plant by its ID
-app.delete("/plants/:plantId", async (req, res) => {
-    await Plant.findByIdAndDelete(req.params.plantId);
-    res.redirect("/plants");
-  });
+app.delete("/plants/:plantId", plantsCtrl.Delete);
+
+
 app.listen(3300), () =>{
     console.log("I'm listening to port 3300");
 }

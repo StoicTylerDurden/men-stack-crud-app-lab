@@ -9,6 +9,9 @@
     <a href="/plants/">Back to Plants</a>
     <h1> <%=plant.name%></h1>
     <p>Description: <%=plant.description%></p>
+
+    <img src="<%= plant.image %>" alt="<%= plant.name %>">
+    
     <a href="/plants/<%=plant._id %>/edit">Edit <%= plant.name %></a>
 
     <form action="/plants/<%=plant._id%>?_method=DELETE" method="POST">
